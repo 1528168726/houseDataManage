@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<script type="text/javascript">
+    function fun1() {
+        let myselect = document.getElementById("searchSelect");
+        let index=myselect.selectedIndex;
+        if (myselect.options[index].value==="manual"){
+            document.getElementById("manualInput").style.display="inline";
+        }
+        else{
+            document.getElementById("manualInput").style.display="none";
+        }
+    }
+</script>
+<body>
+    <div id="container" >
+
+        <div id="header" style="background-color:#ffffb3;min-width: 1280px " >
+            <b style="margin-bottom:0;font-size: 35px">主页 </b>
+            hello <b style="color: #85d0ff;font-size: 25px">{{.user}}</b>
+            <br>
+            <br>
+            <div style="text-align: right;font-size: 20px">
+                <form name="search" action="/home" method="get">
+                    楼盘：
+                    <select id="searchSelect" name="searchSelect" onchange="fun1()">
+                        <option value="manual" >右侧手动输入</option>
+                        {{range $index, $ele := .EstateAddrs}}
+                        <option value="{{$ele}}"> {{$ele}}</option>
+                        {{ end }}
+                    </select>
+                    <input id="manualInput" type="text" name="manualSearch" style="display: inline">
+                    楼栋号<u style="font-size: 10px">（0代表不按楼栋检索）</u>:
+                    <input type="number" name="BuildingAddr" min="0" value="0" style="width: 40px">
+                    <input type="submit" value="搜索" ><br>
+                </form>
+            </div>
+
+        </div>
+
+        <div id="menu" style="background-color:#ffffe5;height:800px;width:200px;float: left ;">
+            <b>菜单</b><br>
+            <a href="/home">主菜单<br></a>
+            <a href="/admin" style="{{.rootShow}}">管理员控制<br></a>
+            <a href="/submitHouseInfo">提交房源信息<br></a>
+            <a href="/resetPassword">更改密码<br></a>
+        </div>
+
+        <div id="content" style="background-color:#EEEEEE;height:720px;min-width: 1400px; float: top">
+            <br>
+            <div style="float: top;height: 50px">
+                <div style="float: left;width: 250px;text-align: center" >
+                    <a href="{{.byEstateAddr}}">楼盘名&#8595;&#8593;</a>
+                </div>
+                <div style="float: left;width: 200px;text-align: center">
+                    地址
+                </div>
+                <div style="float: left;width: 150px;text-align: center">
+                    户型
+                </div>
+                <div style="float: left;width: 150px;text-align: center">
+                    <a href="{{.byArea}}">面积&#8595;&#8593;</a>
+                </div>
+                <div style="float: left;width: 150px;text-align: center">
+                    <a href="{{.byPrice}}">总价&#8595;&#8593;</a>
+                </div>
+                <div style="float: left;width: 150px;text-align: center">
+                    <a href="{{.byUnitPrice}}">单价&#8595;&#8593;</a>
+                </div>
+                <div style="float: left;width: 150px;text-align: center">
+                    朝向
+                </div>
+            </div>
+            <div style="float: top">
+                <ul>
+                    {{$curUrl:=.curUrl}}
+                    {{range $index, $ele := .houseInfo}}
+                    <li>
+                        <div style="float: left;width: 250px;text-align: center">
+                            <a  style="text-decoration:none;" href="/detail?houseId={{$ele.HouseId}}&preUrl={{$curUrl}}">
+                                <b style=" font-size: 25px">{{$ele.EstateAddr}}</b>
+                            </a>
+                        </div>
+                        <div style="float: left;width: 200px;text-align: center">
+                            {{$ele.DetailAddr}}
+                        </div>
+                        <div style="float: left;width: 150px;text-align: center">
+                            {{$ele.HouseType}}&ensp;
+                        </div>
+                        <div style="float: left;width: 150px;text-align: center">
+                            {{$ele.Area}}平方
+                        </div>
+                        <div style="float: left;width: 150px;text-align: center">
+                            {{$ele.Price}}万元
+                        </div>
+                        <div style="float: left;width: 150px;text-align: center">
+                            {{$ele.UnitPrice}}万元
+                        </div>
+                        <div style="float: left;width: 150px;text-align: center">
+                            {{$ele.Orientation}}
+                        </div>
+
+                    </li><br><br><br>
+                    {{ end }}
+
+                </ul>
+
+            </div>
+            <h1 style="color: red">{{.error}}</h1>
+<!--            <h1 style="text-align:center;float: bottom"></h1>-->
+        </div>
+
+        <div id="index" style="background-color:#EEEEEE;float: bottom;height:80px;min-width: 1280px;text-align:center;font-size:20px;">
+                <b >当前页{{.curPage}}  总页数{{.allPage}}
+                <a href="{{.firstPage}}" style="{{.preShow}}">首页</a>
+                <a href="{{.prePage}}" style="{{.preShow}}">上一页</a>
+                <a href="{{.nextPage}}" style="{{.nextShow}}">下一页</a></b>
+                <a href="{{.lastPage}}" style="{{.nextShow}}">尾页</a>
+        </div>
+
+        <div id="footer" style="background-color:#ffbb33;clear:both;text-align:center;">
+        Develop by alg</div>
+
+    </div>
+</body>
+</html>

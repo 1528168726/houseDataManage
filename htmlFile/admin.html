@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员</title>
+</head>
+<body>
+    <div id="container" style="min-width: 1400px">
+
+        <div id="header" style="background-color:#ffffb3;min-width: 1400px " >
+            <b style="margin-bottom:0;font-size: 35px">管理 </b>
+            hello <b style="color: #85d0ff;font-size: 25px">{{.user}}</b>
+            <br>
+            <br>
+        </div>
+
+        <div id="menu" style="background-color:#ffffe5;height:800px;width:200px;float: left ;">
+            <b>菜单</b><br>
+            <a href="/home">主菜单</a><br>
+            <a href="/admin", style="{{.rootShow}}">管理员控制<br></a>
+            <a href="/submitHouseInfo">提交房源信息<br></a>
+            <a href="/resetPassword">更改密码<br></a>
+        </div>
+
+        <div id="content" style="background-color:#EEEEEE;height:800px;min-width: 1200px; float: top;">
+            <div style=";float: left">
+                <form action="/admin/addUser" method="get">
+                    添加账户：<br>
+                    账号：<input type="text" name="newUser"><br>
+                    密码：<input type="text" name="pwd"><br>
+                    <input type="submit" value="添加" ><br>
+                    <b style="font-size: 30px;color: red">{{.msg}}</b>
+                </form>
+            </div>
+            <div style="width: 100px;height: 800px;float: left" >
+                &emsp;
+            </div>
+            <div style="width: 200px;height: 800px;float: left" >
+                <b style="font-size: 25px;">所有账号：</b>
+                {{range $index, $ele := .users}}
+                <li>
+                    <I>{{$ele}}&emsp;
+                        <a href="/admin/userDelete?user={{$ele}}">删除</a>
+                    </I>
+                </li>
+                {{end}}
+            </div>
+
+
+        </div>
+        <div id="footer" style="background-color:#ffbb33;clear:both;text-align:center;">
+        Develop by alg
+        </div>
+
+    </div>
+</body>
+</html>

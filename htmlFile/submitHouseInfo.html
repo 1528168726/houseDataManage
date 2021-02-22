@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提交房源</title>
+</head>
+<script type="text/javascript">
+    function fun1() {
+        let myselect = document.getElementById("selectEstateAddr");
+        let index=myselect.selectedIndex;
+        if (myselect.options[index].value==="other"){
+            document.getElementById("manualInput").style.display="inline";
+        }
+        else{
+            document.getElementById("manualInput").style.display="none";
+        }
+    }
+</script>
+<body>
+    <div id="container" style="min-width: 1400px">
+
+        <div id="header" style="background-color:#ffffb3;min-width: 1400px " >
+            <b style="margin-bottom:0;font-size: 35px">管理 </b>
+            hello <b style="color: #85d0ff;font-size: 25px">{{.user}}</b>
+            <br>
+            <br>
+        </div>
+
+        <div id="menu" style="background-color:#ffffe5;height:800px;width:200px;float: left ;">
+            <b>菜单</b><br>
+            <a href="/home">主菜单</a><br>
+            <a href="/admin", style="{{.rootShow}}">管理员控制<br></a>
+            <a href="/submitHouseInfo">提交房源信息<br></a>
+            <a href="/resetPassword">更改密码<br></a>
+        </div>
+
+        <div id="content" style="background-color:#EEEEEE;height:800px;min-width: 1200px; float: top;">
+            <br><h1>提交房源信息</h1>
+            <form name="submit" action="/submitHouseInfo" method="post">
+
+                <h3>物业地址</h3>
+                委托类型 <b style="color: red">*</b>：
+                <input type="radio" name="IsSell" value="true" checked>出售&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="IsSell" value="false">出租<br>
+                楼盘地址 <b style="color: red">*</b>：
+                <select id="selectEstateAddr" name="EstateAddr" onchange="fun1()">
+                    {{range $index, $ele := .EstateAddrs}}
+                    <option value="{{$ele}}"> {{$ele}}</option>
+                    {{ end }}
+                    <option value="other"> 新的楼盘(在左侧框输入新楼盘名）</option>
+                </select>
+                <input id="manualInput" type="text" name="NewEstateAddr" style="display: none"><br>
+                楼栋号 <b style="color: red">*</b>：
+                <input type="number" name="BuildingAddr" min="1" max="100" required><br>
+                详细地址<b style="color: red">*</b>：
+                <input type="number" name="DetailAddr1" min="1" max="199">单元
+                <input type="number" name="DetailAddr2" min="-10" max="999"required>楼层
+                <input type="number" name="DetailAddr3" min="-9999",max="9999" required>门牌<br>
+                <br>
+
+                <h3>业主信息</h3>
+                姓名 <b style="color: red">*</b>：
+                <input type="text" name="OwnerName"required><br>
+                手机 <b style="color: red">*</b>：
+                <input type="tel" name="OwnerPhoneNumber"required><br>
+                微信:
+                <input type="text" name="WeChatNumber"><br><br>
+
+                <h3>房源信息</h3>
+                户型<b style="color: red">*</b>：
+                <input type="text" name="HouseType" ><br>
+                朝向<b style="color: red">*</b>：
+                <input type="text" name="Orientation" ><br>
+                面积 <b style="color: red">*</b>：
+                <input type="number" name="Area" min="0" required>平方米<br>
+                售价 <b style="color: red">*</b>：
+                <input type="number" name="Price" min="0" required>万元<br>
+                备注:
+                &emsp;<textarea name="Remark" cols="40" rows="4"></textarea><br>
+                <h2>
+                    <input type="submit" value="提交" >
+                    <input type="reset" value="重置">
+                </h2>
+                <h3><a href="/home">返回主页</a></h3>
+
+
+
+
+            </form>
+
+        </div>
+        <div id="footer" style="background-color:#ffbb33;clear:both;text-align:center;">
+        Develop by alg
+        </div>
+
+    </div>
+</body>
+</html>

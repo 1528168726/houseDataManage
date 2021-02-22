@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>error</title>
+</head>
+<body>
+    <div id="container" style="min-width: 1400px">
+
+        <div id="header" style="background-color:#ffffb3;min-width: 1400px " >
+            <b style="margin-bottom:0;font-size: 35px">管理 </b>
+            hello <b style="color: #85d0ff;font-size: 25px">{{.user}}</b>
+            <br>
+            <br>
+        </div>
+
+        <div id="menu" style="background-color:#ffffe5;height:800px;width:200px;float: left ;">
+            <b>菜单</b><br>
+            <a href="/home">主菜单</a><br>
+            <a href="/admin", style="{{.rootShow}}">管理员控制<br></a>
+            <a href="/submitHouseInfo">提交房源信息<br></a>
+            <a href="/resetPassword">更改密码<br></a>
+        </div>
+
+        <div id="content" style="background-color:#EEEEEE;height:800px;min-width: 1200px; float: top;">
+            <br></a><h1>录入失败</h1>
+            <h3>错误信息：</h3>
+            {{.error}}<br>
+            <i style="font-size: 10px">如果无法解决，请联系管理员</i><br>
+            <a href="\submitHouseInfo">重新录入</a>
+
+        </div>
+        <div id="footer" style="background-color:#ffbb33;clear:both;text-align:center;">
+        Develop by alg
+        </div>
+
+    </div>
+</body>
+</html>
